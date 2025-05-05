@@ -128,6 +128,15 @@ If you need help, [your best bet is to look at my BTCRecover playlist on YouTube
 ## Setup and Usage Tutorials ##
 BTCRecover is a Python (3.8, 3.9, 3.10, 3.11) script so will run on Windows, Linux and Mac environments. [See the installation guide for more info](docs/INSTALL.md)
 
+**macOS Note:**  
+If you are on macOS, you must install system dependencies for cryptographic libraries before running `pip install -r requirements.txt` or `pip install -r requirements-full.txt`:
+
+```sh
+brew install automake
+brew install libtool
+```
+This is required for building coincurve (libsecp256k1) and related dependencies.
+
 [I have created a growing playlist](https://www.youtube.com/playlist?list=PL7rfJxwogDzmd1IanPrmlTg3ewAIq-BZJ) that covers a number of usage examples for using this tool to recover seed phrases, BIP39 passphrases, etc.
 
 This repository also included some example commands and file templates in the ./docs/ folder of the repository.

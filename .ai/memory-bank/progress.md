@@ -3,16 +3,15 @@
 ## What Works
 - Project brief and Memory Bank structure established.
 - Security requirements and technical context documented.
+- Proof-of-concept for 25th word (BIP39 passphrase) recovery using the CLI completed and tested.
 
 ## What's Left to Build
-- Document proof-of-concept steps for 25th word (BIP39 passphrase) recovery using the CLI.
-- Implement and test CLI recovery workflow.
 - Design and build the GUI frontend.
 - Integrate GUI with btcrecover backend.
 
 ## Current Status
-- In planning and documentation phase.
-- No functional CLI or GUI components yet; focus is on requirements, architecture, and security.
+- CLI 25th word recovery workflow is functional and documented.
+- GUI development and integration are the next focus.
 
 ## Known Issues
 - None at this stage; implementation not yet started.

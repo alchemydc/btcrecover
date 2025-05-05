@@ -9,6 +9,9 @@
 - Use a Python virtual environment (venv or similar) to isolate dependencies:
   - `python3 -m venv .venv`
   - `source .venv/bin/activate` (Linux/macOS) or `.venv\Scripts\activate` (Windows)
+- On macOS, install system dependencies for coincurve (libsecp256k1) before pip install:
+  - `brew install automake`
+  - `brew install libtool`
 - Install dependencies from requirements.txt: `pip install -r requirements.txt`
 - GUI dependencies will be added based on framework selection
 - Run CLI or GUI entrypoint as appropriate
@@ -20,6 +23,7 @@
 
 ## Dependencies
 - btcrecover: core wallet recovery logic
+- coincurve (libsecp256k1): requires system libraries (`automake`, `libtool`) on macOS
 - GUI library (Gooey, PySimpleGUI, or Tkinter): user interface
 - Standard Python libraries for subprocess, file I/O, etc.
 
