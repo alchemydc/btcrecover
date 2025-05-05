@@ -8,10 +8,11 @@
 - Added a top-level Security Considerations section to productContext.md, requiring careful handling of partial seeds and passphrase fragments.
 - Documented that on macOS, installing coincurve (libsecp256k1) requires `brew install automake` and `brew install libtool` before running pip install.
 - Successfully completed and validated the CLI 25th word (BIP39 passphrase) recovery workflow.
+- Switched GUI implementation from PySimpleGUI to FreeSimpleGUI due to PySimpleGUI's license change; FreeSimpleGUI is now used for the proof-of-concept GUI.
 
 ## Next Steps
-1. Finalize and document the architectural decision to use a GUI wrapper (PySimpleGUI or Tkinter) that calls btcrecover.py as a subprocess.
-2. Design and implement the GUI frontend for seed and passphrase recovery.
+1. Finalize and document the architectural decision to use a GUI wrapper (FreeSimpleGUI or Tkinter) that calls btcrecover.py as a subprocess.
+2. Design and implement the GUI frontend for seed and passphrase recovery using FreeSimpleGUI.
 3. Integrate the GUI with the btcrecover backend via subprocess calls.
 4. Document the GUI workflow and update Memory Bank files accordingly.
 
@@ -20,7 +21,7 @@
 - The GUI must be accessible to non-technical users, with advanced options hidden by default.
 - System dependencies for cryptographic libraries (e.g., coincurve) must be documented for each platform; on macOS, Homebrew packages `automake` and `libtool` are required.
 - Gooey is not suitable for this project because btcrecover.py does not use argparse; refactoring for Gooey would be disruptive.
-- PySimpleGUI (or Tkinter) with subprocess is the preferred approach for building the GUI, as it allows the core logic to remain unchanged and is easy to maintain.
+- PySimpleGUI was rejected due to its new license; FreeSimpleGUI (or Tkinter) with subprocess is now the preferred approach for building the GUI, as it allows the core logic to remain unchanged and is easy to maintain.
 
 ## Important Patterns and Preferences
 - Documentation-first workflow: Memory Bank is the single source of truth for project context and progress.
