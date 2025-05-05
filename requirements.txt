@@ -3,3 +3,4 @@ green~=4.0.2
 protobuf~=3.19.1
 pycryptodome~=3.19.1
 freesimplegui
+python-dotenv

@@ -4,20 +4,28 @@
 - Project brief and Memory Bank structure established.
 - Security requirements and technical context documented.
 - Proof-of-concept for 25th word (BIP39 passphrase) recovery using the CLI completed and tested.
+- GUI frontend built using FreeSimpleGUI as a wrapper that calls btcrecover.py via subprocess.
+- GUI features:
+  - .env file support for pre-populating fields (python-dotenv).
+  - Dark mode enabled by default.
+  - User-selectable Token List or Password List input type; correct flag passed to btcrecover.
+  - Dynamic label updates for input type.
+  - Slider to control number of CPU cores allocated to cracking.
+  - Tooltips added to all input fields.
+  - requirements.txt restored and python-dotenv added as a dependency.
 
 ## What's Left to Build
-- Design and build the GUI frontend using FreeSimpleGUI (or Tkinter) as a wrapper that calls btcrecover.py via subprocess.
-- Integrate the GUI with the btcrecover backend using subprocess calls.
-- Add slider to allow user to control number of cores allocated to cracking.
-- Add tooltips to GUI
-- Add explainers for how the token list is used by btcrecover
-- Add progress bar
-- Add advanced settings / view to allow user to stop cracking and continue where they left off, potentially on multiple machines
+- Add explainers/help for how token lists and wildcards work with btcrecover.
+- Add progress bar to GUI.
+- Add advanced settings/view to allow user to stop cracking and continue where they left off, potentially on multiple machines.
+- Improve cancel button reliability and UI responsiveness during cracking.
+- Perform cross-platform testing and gather user feedback.
 
 ## Current Status
 - CLI 25th word recovery workflow is functional and documented.
-- Architectural decision made: Gooey is not suitable due to lack of argparse in btcrecover.py. 
-- GUI development will proceed using PySimpleGUI (or Tkinter) with subprocess integration.
+- GUI frontend is functional with major usability features implemented.
+- Architectural decision made: Gooey is not suitable due to lack of argparse in btcrecover.py.
+- GUI development is proceeding using FreeSimpleGUI with subprocess integration.
 
 ## Known Issues
 - btcrecover uses all cores, which leaves nothing left for UI while running

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ -z "$ADDR" ]; then
-  read -p "Enter target address: " ADDR
-  export ADDR
+if [ -z "$ADDRESS" ]; then
+  read -p "Enter target address: " ADDRESS
+  export ADDRESS
 fi
 
 if [ -z "$MNEMONIC" ]; then
@@ -13,8 +13,8 @@ fi
 echo "Using Python: $(which python)"
 
 #echo "testing recovery with GPU acceleration"
-#time python btcrecover.py --dsw  --enable-opencl --bip39 --addrs $ADDR --addr-limit 1 --tokenlist tokens.txt --mnemonic "$MNEMONIC"
+#time python btcrecover.py --dsw  --enable-opencl --bip39 --addrs $ADDRESS --addr-limit 1 --tokenlist tokens.txt --mnemonic "$MNEMONIC"
 
 echo "testing recovery without acceleration"
-time python btcrecover.py --dsw --bip39 --addrs $ADDR --addr-limit 1 --tokenlist tokenlist.txt --mnemonic "$MNEMONIC"
+time python btcrecover.py --dsw --bip39 --addrs $ADDRESS --addr-limit 1 --tokenlist tokenlist.txt --mnemonic "$MNEMONIC"
 

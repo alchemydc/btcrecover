@@ -20,3 +20,5 @@ Enable non-technical users to recover access to their cryptocurrency wallets by 
 - Clear instructions and helpful error messages.
 - Minimal required input; advanced options hidden by default.
 - Safe handling of sensitive data (seeds/passphrases never leave the user's machine).
+- Fields can be pre-populated from a .env file for convenience.
+- Tooltips provided for all input fields to guide users.

@@ -9,12 +9,20 @@
 - Documented that on macOS, installing coincurve (libsecp256k1) requires `brew install automake` and `brew install libtool` before running pip install.
 - Successfully completed and validated the CLI 25th word (BIP39 passphrase) recovery workflow.
 - Switched GUI implementation from PySimpleGUI to FreeSimpleGUI due to PySimpleGUI's license change; FreeSimpleGUI is now used for the proof-of-concept GUI.
+- Major GUI improvements:
+  - .env file support for pre-populating UI fields using python-dotenv.
+  - Dark mode enabled by default.
+  - User can select between Token List and Password List input types; correct flag is passed to btcrecover.
+  - Dynamic label updates for input type.
+  - Tooltips added to all input fields for user guidance.
+  - requirements.txt restored and python-dotenv added as a dependency.
 
 ## Next Steps
-1. Finalize and document the architectural decision to use a GUI wrapper (FreeSimpleGUI or Tkinter) that calls btcrecover.py as a subprocess.
-2. Design and implement the GUI frontend for seed and passphrase recovery using FreeSimpleGUI.
-3. Integrate the GUI with the btcrecover backend via subprocess calls.
-4. Document the GUI workflow and update Memory Bank files accordingly.
+1. Continue refining the GUI for usability and accessibility.
+2. Add advanced features (e.g., progress bar, ability to stop/resume cracking, multi-machine support).
+3. Expand documentation for wildcard usage and advanced token/password list features.
+4. Perform cross-platform testing and gather user feedback.
+5. Update Memory Bank and documentation as new features are added.
 
 ## Active Decisions and Considerations
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.

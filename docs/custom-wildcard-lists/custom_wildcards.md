@@ -1,13 +1,13 @@
 
-#Custom Wildcard Lists
+# Custom Wildcard Lists
 BTCRecover allows you to pass an argument to a standard text file containing a list of items that can be used as an expanding wildcard.
 
 _If you attempt to use a custom wildcard without first having passed an argument to a list file, that wildcard will simply return a single blank string. (So will be ignored)_
 
 If you make use of this feature, it is wise to check that your custom wildcards are being correctly loaded and behave as you expect through use of the --listpass argument.
 
-##Repeating String Wildcards
-###Repetition Behaviour
+## Repeating String Wildcards
+### Repetition Behaviour
 The `%e` and `%f` wildcards are special in that when they appear multiple times in a given candidate password, they will have the same value.
 
 What this means is that they are useful for situations where you may have used some character (or string) which is repeated multiple times throughout a password. 
