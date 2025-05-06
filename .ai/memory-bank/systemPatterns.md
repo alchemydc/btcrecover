@@ -4,6 +4,8 @@
 - Modular structure: Python CLI backend (btcrecover core logic) and a GUI frontend (FreeSimpleGUI).
 - GUI acts as a thin layer, invoking CLI logic and presenting results to the user.
 - .env file support for pre-populating GUI fields (via python-dotenv).
+- "Advanced Options" toggle in the GUI controls visibility of address limit, thread selection, and GPU acceleration controls.
+- Wildcard cheatsheet hyperlink is shown next to the token list label when Token List is selected.
 
 ## Key Technical Decisions
 - Use Python for both backend and GUI for compatibility and ease of integration.
@@ -11,6 +13,7 @@
 - GUI framework selection prioritizes simplicity, cross-platform support, and permissive licensing (FreeSimpleGUI chosen).
 - GUI supports user-selectable input type (Token List or Password List) and passes correct flag to backend.
 - Tooltips provided for all input fields to improve usability.
+- Advanced options visibility logic: attempted explicit boolean handling for hiding, reverted to original logic after issue persisted.
 
 ## Design Patterns in Use
 - Separation of concerns: GUI and recovery logic are decoupled.

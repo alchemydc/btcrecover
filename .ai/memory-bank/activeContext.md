@@ -16,6 +16,9 @@
   - Dynamic label updates for input type.
   - Tooltips added to all input fields for user guidance.
   - requirements.txt restored and python-dotenv added as a dependency.
+  - "Advanced Options" toggle added: address limit, thread selection, and GPU acceleration controls are now only visible when enabled.
+  - Wildcard cheatsheet hyperlink added next to "Enter token list" label, visible only for Token List input type.
+  - Attempted fix for advanced options visibility (ensuring column hides when deselected); reverted to original logic after issue persisted.
 
 ## Next Steps
 1. Continue refining the GUI for usability and accessibility.
@@ -23,10 +26,11 @@
 3. Expand documentation for wildcard usage and advanced token/password list features.
 4. Perform cross-platform testing and gather user feedback.
 5. Update Memory Bank and documentation as new features are added.
+6. Investigate and resolve advanced options visibility issues in FreeSimpleGUI if possible.
 
 ## Active Decisions and Considerations
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.
-- The GUI must be accessible to non-technical users, with advanced options hidden by default.
+- The GUI must be accessible to non-technical users, with advanced options hidden by default (address limit, thread selection, and GPU acceleration are only shown when "Show Advanced Options" is enabled).
 - System dependencies for cryptographic libraries (e.g., coincurve) must be documented for each platform; on macOS, Homebrew packages `automake` and `libtool` are required.
 - Gooey is not suitable for this project because btcrecover.py does not use argparse; refactoring for Gooey would be disruptive.
 - PySimpleGUI was rejected due to its new license; FreeSimpleGUI (or Tkinter) with subprocess is now the preferred approach for building the GUI, as it allows the core logic to remain unchanged and is easy to maintain.
