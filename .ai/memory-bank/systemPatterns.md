@@ -6,6 +6,7 @@
 - .env file support for pre-populating GUI fields (via python-dotenv).
 - "Advanced Options" toggle in the GUI controls visibility of address limit, thread selection, and GPU acceleration controls.
 - Wildcard cheatsheet hyperlink is shown next to the token list label when Token List is selected.
+- Direct use of btcrecover internals (e.g., btcrpass) in isolation is not robust: many globals must be manually set, and the modules are not designed for modular reuse without full CLI context.
 
 ## Key Technical Decisions
 - Use Python for both backend and GUI for compatibility and ease of integration.

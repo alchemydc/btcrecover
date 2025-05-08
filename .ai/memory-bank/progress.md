@@ -5,6 +5,7 @@
 - Security requirements and technical context documented.
 - Proof-of-concept for 25th word (BIP39 passphrase) recovery using the CLI completed and tested.
 - GUI frontend built using FreeSimpleGUI as a wrapper that calls btcrecover.py via subprocess.
+- Lessons learned from failed attempt to use btcrpass internals directly for passphrase brute-forcing with tokenlist wildcards.
 - GUI features:
   - .env file support for pre-populating fields (python-dotenv).
   - Dark mode enabled by default.
@@ -23,6 +24,7 @@
 - Add advanced settings/view to allow user to stop cracking and continue where they left off, potentially on multiple machines.
 - Improve cancel button reliability and UI responsiveness during cracking.
 - Perform cross-platform testing and gather user feedback.
+- If modularization is needed, consider refactoring btcrecover internals to reduce reliance on global state.
 
 ## Current Status
 - CLI 25th word recovery workflow is functional and documented.
@@ -34,9 +36,11 @@
 - btcrecover uses all cores, which leaves nothing left for UI while running
 - cancel button in UI doesn't work
 - Advanced options column may not always hide as expected when toggled off (FreeSimpleGUI limitation or bug).
+- Direct use of btcrpass functions in isolation is fragile due to many required globals.
 
 ## Evolution of Project Decisions
 - Security elevated to a top-level requirement (handle seeds/passphrases with care).
 - Use of Python virtual environments (venv) mandated for dependency isolation.
 - Documentation-first workflow adopted to ensure clarity and continuity.
 - Gooey was evaluated but rejected due to incompatibility with the current CLI structure; PySimpleGUI (or Tkinter) with subprocess is now the preferred GUI approach.
+- Direct modular use of btcrpass abandoned after experiment; future approaches should avoid this pattern unless btcrecover is refactored for modularity.

@@ -3,6 +3,7 @@
 ## Current Work Focus
 - Establishing and populating the Memory Bank documentation for the btcrecover GUI project.
 - Proof-of-concept for 25th word (BIP39 passphrase) recovery using the CLI is complete and tested.
+- Attempted to create a standalone script for passphrase brute-forcing using tokenlist wildcards by directly invoking btcrpass internals.
 
 ## Recent Changes
 - Added a top-level Security Considerations section to productContext.md, requiring careful handling of partial seeds and passphrase fragments.
@@ -27,6 +28,7 @@
 4. Perform cross-platform testing and gather user feedback.
 5. Update Memory Bank and documentation as new features are added.
 6. Investigate and resolve advanced options visibility issues in FreeSimpleGUI if possible.
+7. Avoid direct use of btcrpass internals in standalone scripts due to excessive reliance on uninitialized globals.
 
 ## Active Decisions and Considerations
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.
@@ -43,3 +45,4 @@
 - Early focus on documentation and security requirements will guide both CLI and GUI development.
 - The CLI workflow for 25th word recovery is foundational for the GUI feature set.
 - Hands-on CLI testing confirmed the documented workflow is robust and effective.
+- Directly invoking btcrpass functions in isolation is not maintainable; too many globals must be manually set, leading to fragile and error-prone code. This approach is not recommended for future modularization.
