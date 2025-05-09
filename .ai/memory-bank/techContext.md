@@ -3,7 +3,8 @@
 ## Technologies Used
 - Python 3.x (core language for both CLI and GUI)
 - btcrecover (CLI backend)
-- GUI framework: FreeSimpleGUI
+- btcrpass.py (python library for doing recovery of passphrase aka "25th word")
+- GUI framework: FreeSimpleGUI used for initial POC UI but proving to be ineffective for good UX going forward due to lack of responsiveness.
 - python-dotenv for .env file support
 
 ## Development Setup
@@ -25,7 +26,8 @@
 ## Dependencies
 - btcrecover: core wallet recovery logic
 - coincurve (libsecp256k1): requires system libraries (`automake`, `libtool`) on macOS
-- FreeSimpleGUI: user interface
+- FreeSimpleGUI: user interface used for POC
+- python-tk: GUI framework
 - python-dotenv: .env file support for GUI field pre-population
 - Standard Python libraries for subprocess, file I/O, etc.
 

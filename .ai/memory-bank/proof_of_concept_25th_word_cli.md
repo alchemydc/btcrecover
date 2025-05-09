@@ -26,7 +26,7 @@ Demonstrate the process of recovering a BIP39 passphrase ("25th word") using the
 
 ## Example Command
 ```
-python btcrecover.py --bip39 --tokenlist tokens.txt --addrs <target_address>
+python btcrecover.py --bip39 --tokenlist tokenlist.txt --addrs <target_address>
 ```
 
 ## References

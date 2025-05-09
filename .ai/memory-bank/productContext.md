@@ -12,7 +12,7 @@ Enable non-technical users to recover access to their cryptocurrency wallets by 
 
 ## How It Should Work
 - Users launch the GUI and are guided through the process of entering their known seed words and possible passphrase candidates.
-- The tool generates and tests combinations using btcrecover's backend logic.
+- The tool generates and tests combinations using the btcrpass.py library
 - Results (success/failure, recovered passphrase, or next steps) are clearly presented in the GUI.
 
 ## User Experience Goals
