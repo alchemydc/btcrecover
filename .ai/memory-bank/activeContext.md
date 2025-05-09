@@ -1,11 +1,11 @@
 # Active Context
 
 ## Current Work Focus
-- Creating a copy of seedrecover.py called passrecover.py that uses the btcrpass.py to brute force the 25th word, given a known 12 or 24 word mnemonic.
+- Pivoting strategy: Pausing `passrecover.py` GUI development. New focus is on investigating and planning enhancements to `btcrseed.py` to support wildcard expansion for passphrase lists (similar to its tokenlist functionality).
 
 
 ## Recent Changes
-- Created `passrecover.py`, a CLI tool modeled on `seedrecover.py` and `btcrecover.py`. It correctly uses `btcrpass.parse_arguments()` and `btcrpass.main()` for BIP39 passphrase (25th word) recovery. Currently, it's CLI-only and lacks the GUI functionalities (like `tk_root` or `show_mnemonic_gui`) present in `btcrseed.py`.
+- Created `passrecover.py`, a CLI tool modeled on `seedrecover.py` and `btcrecover.py`. It correctly uses `btcrpass.parse_arguments()` and `btcrpass.main()` for BIP39 passphrase (25th word) recovery. Currently, it's CLI-only; GUI development for it is now paused.
 - Added a top-level Security Considerations section to productContext.md, requiring careful handling of partial seeds and passphrase fragments.
 - Documented that on macOS, installing coincurve (libsecp256k1) requires `brew install automake` and `brew install libtool` before running pip install.
 - Successfully completed and validated the CLI 25th word (BIP39 passphrase) recovery workflow.
@@ -22,10 +22,14 @@
   - Attempted fix for advanced options visibility (ensuring column hides when deselected); reverted to original logic after issue persisted.
 
 ## Next Steps
-1. Add GUI capabilities to `passrecover.py`, modeling its UI features (like progress display and cancellation) on `btcrseed.py`'s GUI integration. This will involve incorporating Tkinter elements and ensuring `passrecover.py` can interact with them effectively, rather than `btcrpass.py` providing these directly.
-2. Commit and push the newly created `passrecover.py` and updated Memory Bank files.
+1. Complete the pending git commit and push for the initial creation of `passrecover.py` and the previous Memory Bank updates.
+2. Investigate how `btcrpass.py` (used by `btcrseed.py` for password generation logic) handles wildcard expansion for tokenlists.
+3. Plan modifications to `btcrseed.py` (and potentially `btcrpass.py` if common logic can be shared/extended) to enable similar wildcard expansion for the `--passphrase-list` argument when used with `seedrecover.py`.
+4. Update Memory Bank (`activeContext.md`, `progress.md`) to reflect detailed findings and the plan for implementing passphrase wildcard expansion in `btcrseed.py`.
 
 ## Active Decisions and Considerations
+- Decision to pause direct GUI development for `passrecover.py`. Given that `btcrpass.py` (its core) lacks native UI hooks, integrating a responsive GUI is complex.
+- Redirecting efforts to enhance `btcrseed.py` for wildcard support in passphrase lists. This leverages `btcrseed.py`'s existing GUI integration (via `seedrecover.py`) and aims to provide a more powerful and user-friendly passphrase recovery experience within the established seed recovery workflow.
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.
 - The GUI must be accessible to non-technical users, with advanced options hidden by default (address limit, thread selection, and GPU acceleration are only shown when "Show Advanced Options" is enabled).
 - System dependencies for cryptographic libraries (e.g., coincurve) must be documented for each platform; on macOS, Homebrew packages `automake` and `libtool` are required.

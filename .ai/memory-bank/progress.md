@@ -19,7 +19,8 @@
   - Attempted fix for advanced options visibility (explicit boolean), reverted to original logic after issue persisted.
 
 ## What's Left to Build
-- Integrate GUI functionality into `passrecover.py`, modeled on `seedrecover.py`'s direct use of Tkinter and its interaction with `btcrseed.py`'s GUI helper functions (e.g., `show_mnemonic_gui`, `tk_root`). This includes adding a progress bar, responsive cancellation, and other UI elements for a better user experience. `passrecover.py` will need to manage its own Tkinter components as `btcrpass.py` does not provide them.
+- Integrate GUI functionality into `passrecover.py`, modeled on `seedrecover.py`'s direct use of Tkinter and its interaction with `btcrseed.py`'s GUI helper functions (e.g., `show_mnemonic_gui`, `tk_root`). (Currently Paused/Deprioritized in favor of enhancing `btcrseed.py`.)
+- Enhance `btcrseed.py` to support wildcard expansion for its `--passphrase-list` input. This involves understanding how `btcrpass.py`'s PasswordGenerator handles wildcards for tokenlists and adapting/extending that logic for passphrases within the `btcrseed.py` framework.
 - Add explainers/help for how token lists and wildcards work with btcrecover (wildcard cheatsheet hyperlink now present in UI).
 - Add progress bar to GUI.
 - Add advanced settings/view to allow user to stop cracking and continue where they left off, potentially on multiple machines.
@@ -40,6 +41,7 @@
 - Advanced options column does not hide as expected when toggled off (FreeSimpleGUI limitation or bug).
 
 ## Evolution of Project Decisions
+- Pivoted from building a new GUI specifically for `passrecover.py`. The lack of direct UI integration points in `btcrpass.py` makes this challenging for a responsive experience. The new strategy focuses on enhancing `btcrseed.py` to support wildcard expansion for passphrase lists. This approach aims to leverage the existing GUI framework of `seedrecover.py` (which uses `btcrseed.py`) and provide a more powerful passphrase recovery option within that familiar interface. This also aligns better with how `btcrseed.py` already uses `btcrpass.py` for its core password/token generation logic.
 - The creation of `passrecover.py` as a direct CLI wrapper for `btcrpass.py` (similar to how `btcrecover.py` works with `btcrpass.py`, and `seedrecover.py` with `btcrseed.py`) is a step towards a more responsive UI. This approach is preferred over the previous `passphrase_recover_gui.py` which used subprocess calls. The next phase will focus on building GUI components directly within or for `passrecover.py`, drawing inspiration from `seedrecover.py`'s GUI integration with `btcrseed.py`.
 - Wrapping btcrecover.py with passphrase_recover_gui.py does not seem to provide the UX experience that we want. suggest looking at seedrecover.py (which leverages btcrseed.py) and creating passrecover.py which will leverage btcrpass.py.
 - btcrpass.py is too large to fit into LLM context, so will need to do some work by hand to create a GUI wrapper for it. we can learn a lot from looking at seedrecover.py.
