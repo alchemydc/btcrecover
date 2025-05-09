@@ -1532,11 +1532,27 @@ class WalletBIP39(WalletBIP32):
         # Do most of the work in this function:
         passphrases = self._config_mnemonic(mnemonic_guess, lang, passphrases, expected_len, closematch_cutoff)
 
+        # EXPERIMENTAL: Expand wildcards in passphrases (from --passphrase-list) using btcrpass.expand_wildcards_generator
         self._derivation_salts = []
+        expanded_passphrases = []
 
-        # The pbkdf2-derived salt, based on the passphrase, as per BIP39 (needed by _derive_seed());
-        # first ensure that this version of Python supports the characters present in the passphrase
         for passphrase in passphrases:
+            # Expand wildcards if present
+            if "%" in passphrase:
+                for expanded in btcrpass.expand_wildcards_generator(passphrase):
+                    expanded_passphrases.append(expanded)
+            else:
+                expanded_passphrases.append(passphrase)
+
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_expanded_passphrases = []
+        for p in expanded_passphrases:
+            if p not in seen:
+                unique_expanded_passphrases.append(p)
+                seen.add(p)
+
+        for passphrase in unique_expanded_passphrases:
             if sys.maxunicode < 65536:  # if this Python is a "narrow" Unicode build
                 for c in passphrase:
                     c = ord(c)
@@ -3921,6 +3937,23 @@ def main(argv):
     # =====================
     # Set Wallet Parameters
     # =====================
+
+    # Ensure btcrpass wildcards are initialized before config_mnemonic if using --passphrase-list
+    if getattr(args, "passphrase_list", None):
+        # Workaround for tstr NameError: ensure btcrpass has required globals
+        if not hasattr(btcrpass, 'tstr') or getattr(btcrpass, 'tstr', None) is None:
+            setattr(btcrpass, 'tstr', str)
+        if not hasattr(btcrpass, 'tchr') or getattr(btcrpass, 'tchr', None) is None:
+            setattr(btcrpass, 'tchr', chr)
+        if not hasattr(btcrpass, 'string'):
+            import string as string_module_for_btcrpass
+            setattr(btcrpass, 'string', string_module_for_btcrpass)
+        btcrpass.init_wildcards(
+            wildcard_custom_list_e=None,
+            wildcard_custom_list_f=None,
+            wildcard_custom_list_j=None,
+            wildcard_custom_list_k=None
+        )
 
     try:
         loaded_wallet.config_mnemonic(**config_mnemonic_params)

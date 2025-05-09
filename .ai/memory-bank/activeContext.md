@@ -1,10 +1,14 @@
 # Active Context
 
 ## Current Work Focus
-- Pivoting strategy: Pausing `passrecover.py` GUI development. New focus is on investigating and planning enhancements to `btcrseed.py` to support wildcard expansion for passphrase lists (similar to its tokenlist functionality).
-
+- Initial implementation of wildcard passphrase expansion for `--passphrase-list` in `btcrseed.py` is complete and functional for passphrases with up to two wildcards.
+- New focus: Investigating and resolving an `AssertionError: outer_iterations > 0` that occurs in `btcrpass.py` when a candidate passphrase contains more than two wildcards.
 
 ## Recent Changes
+- **Successfully enabled wildcard expansion for `--passphrase-list` in `btcrseed.py` for up to two wildcards.**
+  - Resolved `NameError: name 'tstr' is not defined` in `btcrpass.py` when `init_wildcards()` was called from `btcrseed.py`.
+  - The fix involved modifying `btcrseed.py`'s `main()` function to explicitly set `btcrpass.tstr = str`, `btcrpass.tchr = chr`, and `btcrpass.string = string_module` as attributes on the imported `btcrpass` module before calling `btcrpass.init_wildcards()`. This ensures necessary globals are available.
+  - `WalletBIP39.config_mnemonic` in `btcrseed.py` now correctly uses `btcrpass.expand_wildcards_generator(passphrase)` for passphrases containing '%' to generate all expanded versions.
 - Created `passrecover.py`, a CLI tool modeled on `seedrecover.py` and `btcrecover.py`. It correctly uses `btcrpass.parse_arguments()` and `btcrpass.main()` for BIP39 passphrase (25th word) recovery. Currently, it's CLI-only; GUI development for it is now paused.
 - Added a top-level Security Considerations section to productContext.md, requiring careful handling of partial seeds and passphrase fragments.
 - Documented that on macOS, installing coincurve (libsecp256k1) requires `brew install automake` and `brew install libtool` before running pip install.
@@ -22,12 +26,12 @@
   - Attempted fix for advanced options visibility (ensuring column hides when deselected); reverted to original logic after issue persisted.
 
 ## Next Steps
-1. Complete the pending git commit and push for the initial creation of `passrecover.py` and the previous Memory Bank updates.
-2. Investigate how `btcrpass.py` (used by `btcrseed.py` for password generation logic) handles wildcard expansion for tokenlists.
-3. Plan modifications to `btcrseed.py` (and potentially `btcrpass.py` if common logic can be shared/extended) to enable similar wildcard expansion for the `--passphrase-list` argument when used with `seedrecover.py`.
-4. Update Memory Bank (`activeContext.md`, `progress.md`) to reflect detailed findings and the plan for implementing passphrase wildcard expansion in `btcrseed.py`.
+1. **Investigate and fix the `AssertionError: outer_iterations > 0` in `btcrpass.py`** that occurs when a candidate passphrase (from `--passphrase-list` in `seedrecover.py`) contains more than two wildcards.
+2. Complete the pending git commit and push for the wildcard passphrase expansion feature and previous Memory Bank updates.
+3. Update Memory Bank (`activeContext.md`, `progress.md`) after resolving the new `AssertionError`.
 
 ## Active Decisions and Considerations
+- The fix for the `tstr` NameError during wildcard passphrase expansion involved a targeted initialization of `btcrpass` globals from `btcrseed.py`. This avoided a full `btcrpass.parse_arguments()` call, which had its own CLI argument validation that was problematic for this initialization-only purpose.
 - Decision to pause direct GUI development for `passrecover.py`. Given that `btcrpass.py` (its core) lacks native UI hooks, integrating a responsive GUI is complex.
 - Redirecting efforts to enhance `btcrseed.py` for wildcard support in passphrase lists. This leverages `btcrseed.py`'s existing GUI integration (via `seedrecover.py`) and aims to provide a more powerful and user-friendly passphrase recovery experience within the established seed recovery workflow.
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.
@@ -41,6 +45,7 @@
 - Stepwise, user-friendly recovery process.
 
 ## Learnings and Project Insights
+- Inter-module dependencies and initialization order (e.g., `btcrseed.py` calling `btcrpass.py` functions) can lead to subtle errors like `NameError` if not all globals are available as expected when a module is used as a library. Direct initialization or provision of these globals from the calling module can serve as a workaround.
 - Early focus on documentation and security requirements will guide both CLI and GUI development.
 - The CLI workflow for 25th word recovery is foundational for the GUI feature set.
 - Hands-on CLI testing confirmed the documented workflow is robust and effective.
