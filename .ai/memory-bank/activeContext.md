@@ -5,6 +5,7 @@
 
 
 ## Recent Changes
+- Created `passrecover.py`, a CLI tool modeled on `seedrecover.py` and `btcrecover.py`. It correctly uses `btcrpass.parse_arguments()` and `btcrpass.main()` for BIP39 passphrase (25th word) recovery. Currently, it's CLI-only and lacks the GUI functionalities (like `tk_root` or `show_mnemonic_gui`) present in `btcrseed.py`.
 - Added a top-level Security Considerations section to productContext.md, requiring careful handling of partial seeds and passphrase fragments.
 - Documented that on macOS, installing coincurve (libsecp256k1) requires `brew install automake` and `brew install libtool` before running pip install.
 - Successfully completed and validated the CLI 25th word (BIP39 passphrase) recovery workflow.
@@ -21,7 +22,8 @@
   - Attempted fix for advanced options visibility (ensuring column hides when deselected); reverted to original logic after issue persisted.
 
 ## Next Steps
-1. Creating a copy of seedrecover.py called passrecover.py that uses the btcrpass.py to brute force the 25th word, given a known 12 or 24 word mnemonic.
+1. Add GUI capabilities to `passrecover.py`, modeling its UI features (like progress display and cancellation) on `btcrseed.py`'s GUI integration. This will involve incorporating Tkinter elements and ensuring `passrecover.py` can interact with them effectively, rather than `btcrpass.py` providing these directly.
+2. Commit and push the newly created `passrecover.py` and updated Memory Bank files.
 
 ## Active Decisions and Considerations
 - Security is a top-level requirement: all sensitive data must be handled with care and never leave the user's machine.
