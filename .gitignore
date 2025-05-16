@@ -16,3 +16,6 @@ site/
 possible_passwords.log
 passwordlist.txt
 .env
+build/
+dist/
+.DS_Store

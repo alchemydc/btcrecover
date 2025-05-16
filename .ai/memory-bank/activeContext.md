@@ -3,9 +3,10 @@
 ## Current Work Focus
 - Initial implementation of wildcard passphrase expansion for `--passphrase-list` in `btcrseed.py` is complete and functional for passphrases with up to two wildcards.
 - New focus: Investigating and resolving an `AssertionError: outer_iterations > 0` that occurs in `btcrpass.py` when a candidate passphrase contains more than two wildcards.
+- Ongoing: Improved macOS packaging and cross-version compatibility for the GUI app, including py2app troubleshooting and documentation.
 
 ## Recent Changes
-- **Successfully enabled wildcard expansion for `--passphrase-list` in `btcrseed.py` for up to two wildcards.**
+- Successfully enabled wildcard expansion for `--passphrase-list` in `btcrseed.py` for up to two wildcards.
   - Resolved `NameError: name 'tstr' is not defined` in `btcrpass.py` when `init_wildcards()` was called from `btcrseed.py`.
   - The fix involved modifying `btcrseed.py`'s `main()` function to explicitly set `btcrpass.tstr = str`, `btcrpass.tchr = chr`, and `btcrpass.string = string_module` as attributes on the imported `btcrpass` module before calling `btcrpass.init_wildcards()`. This ensures necessary globals are available.
   - `WalletBIP39.config_mnemonic` in `btcrseed.py` now correctly uses `btcrpass.expand_wildcards_generator(passphrase)` for passphrases containing '%' to generate all expanded versions.
@@ -24,11 +25,14 @@
   - "Advanced Options" toggle added: address limit, thread selection, and GPU acceleration controls are now only visible when enabled.
   - Wildcard cheatsheet hyperlink added next to "Enter token list" label, visible only for Token List input type.
   - Attempted fix for advanced options visibility (ensuring column hides when deselected); reverted to original logic after issue persisted.
+- **macOS packaging and distribution:** Successfully built the GUI app as a .app using py2app, resolved missing dependency and launch errors, and documented troubleshooting steps for py2app and cross-version macOS compatibility.
+- **Documentation:** Added `build_compatibility.md` to the memory bank, summarizing best practices for building on the oldest supported macOS version, using the official Python.org installer, and testing on all target OS versions.
 
 ## Next Steps
-1. **Investigate and fix the `AssertionError: outer_iterations > 0` in `btcrpass.py`** that occurs when a candidate passphrase (from `--passphrase-list` in `seedrecover.py`) contains more than two wildcards.
+1. Investigate and fix the `AssertionError: outer_iterations > 0` in `btcrpass.py` that occurs when a candidate passphrase (from `--passphrase-list` in `seedrecover.py`) contains more than two wildcards.
 2. Complete the pending git commit and push for the wildcard passphrase expansion feature and previous Memory Bank updates.
 3. Update Memory Bank (`activeContext.md`, `progress.md`) after resolving the new `AssertionError`.
+4. Continue refining packaging and distribution for non-technical users, referencing the new compatibility documentation.
 
 ## Active Decisions and Considerations
 - The fix for the `tstr` NameError during wildcard passphrase expansion involved a targeted initialization of `btcrpass` globals from `btcrseed.py`. This avoided a full `btcrpass.parse_arguments()` call, which had its own CLI argument validation that was problematic for this initialization-only purpose.

@@ -20,6 +20,8 @@
   - Wildcard cheatsheet hyperlink next to "Enter token list" label, visible only for Token List input type.
   - Thread slider and GPU acceleration moved to advanced options.
   - Attempted fix for advanced options visibility (explicit boolean), reverted to original logic after issue persisted.
+- **macOS packaging and distribution:** Successfully built the GUI app as a .app using py2app, resolved missing dependency and launch errors, and documented troubleshooting steps for py2app and cross-version macOS compatibility.
+- **Documentation:** Added `build_compatibility.md` to the memory bank, summarizing best practices for building on the oldest supported macOS version, using the official Python.org installer, and testing on all target OS versions.
 
 ## What's Left to Build
 - Integrate GUI functionality into `passrecover.py`, modeled on `seedrecover.py`'s direct use of Tkinter and its interaction with `btcrseed.py`'s GUI helper functions (e.g., `show_mnemonic_gui`, `tk_root`). (Currently Paused/Deprioritized in favor of enhancing `btcrseed.py`.)
@@ -30,6 +32,7 @@
 - Improve cancel button reliability and UI responsiveness during cracking.
 - Perform cross-platform testing and gather user feedback.
 - If modularization is needed, consider refactoring btcrecover internals to reduce reliance on global state.
+- Continue refining packaging and distribution for non-technical users, referencing the new compatibility documentation.
 
 ## Current Status
 - CLI 25th word recovery workflow is functional and documented.
@@ -37,19 +40,22 @@
 - GUI frontend is functional with major usability features implemented.
 - Architectural decision made: Gooey is not suitable due to lack of argparse in btcrecover.py.
 - GUI development is proceeding using FreeSimpleGUI with subprocess integration.
+- macOS GUI app can be built and run on the developer's machine; compatibility and distribution for older macOS versions is now documented.
 
 ## Known Issues
 - **`AssertionError: outer_iterations > 0` in `btcrpass.py` when a passphrase (from `--passphrase-list` in `seedrecover.py`) contains more than two wildcards.**
-- no progress is shown in the UI (passphrase_recover_gui.py) after the subprocess is created until it completes. this is bad UX
-- cancel button in UI doesn't work
+- No progress is shown in the UI (passphrase_recover_gui.py) after the subprocess is created until it completes. This is bad UX.
+- Cancel button in UI doesn't work.
 - Advanced options column does not hide as expected when toggled off (FreeSimpleGUI limitation or bug).
+- Cross-macOS compatibility: .app built on newer macOS may not run on older versions; must build on oldest supported OS as documented.
 
 ## Evolution of Project Decisions
 - Pivoted from building a new GUI specifically for `passrecover.py`. The lack of direct UI integration points in `btcrpass.py` makes this challenging for a responsive experience. The strategy to enhance `btcrseed.py` to support wildcard expansion for passphrase lists has been successfully implemented for basic cases (up to two wildcards). This approach aims to leverage the existing GUI framework of `seedrecover.py` (which uses `btcrseed.py`) and provide a more powerful passphrase recovery option within that familiar interface. This also aligns better with how `btcrseed.py` already uses `btcrpass.py` for its core password/token generation logic.
 - The creation of `passrecover.py` as a direct CLI wrapper for `btcrpass.py` (similar to how `btcrecover.py` works with `btcrpass.py`, and `seedrecover.py` with `btcrseed.py`) is a step towards a more responsive UI. This approach is preferred over the previous `passphrase_recover_gui.py` which used subprocess calls. The next phase will focus on building GUI components directly within or for `passrecover.py`, drawing inspiration from `seedrecover.py`'s GUI integration with `btcrseed.py`.
-- Wrapping btcrecover.py with passphrase_recover_gui.py does not seem to provide the UX experience that we want. suggest looking at seedrecover.py (which leverages btcrseed.py) and creating passrecover.py which will leverage btcrpass.py.
-- btcrpass.py is too large to fit into LLM context, so will need to do some work by hand to create a GUI wrapper for it. we can learn a lot from looking at seedrecover.py.
+- Wrapping btcrecover.py with passphrase_recover_gui.py does not seem to provide the UX experience that we want. Suggest looking at seedrecover.py (which leverages btcrseed.py) and creating passrecover.py which will leverage btcrpass.py.
+- btcrpass.py is too large to fit into LLM context, so will need to do some work by hand to create a GUI wrapper for it. We can learn a lot from looking at seedrecover.py.
 - Security elevated to a top-level requirement (handle seeds/passphrases with care).
 - Use of Python virtual environments (venv) mandated for dependency isolation.
 - Documentation-first workflow adopted to ensure clarity and continuity.
 - Gooey was evaluated but rejected due to incompatibility with the current CLI structure; PySimpleGUI (now FreeSimpleGUI) with subprocess is now the preferred GUI approach.
+- **macOS packaging and distribution:** Added best practices for cross-version compatibility and troubleshooting to the memory bank.

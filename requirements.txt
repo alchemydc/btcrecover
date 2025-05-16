@@ -4,3 +4,4 @@ protobuf~=3.19.1
 pycryptodome~=3.19.1
 freesimplegui
 python-dotenv
+jaraco.text
